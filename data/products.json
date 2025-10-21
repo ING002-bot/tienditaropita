@@ -1,0 +1,10 @@
+[
+  {"id":"fs-tee-black","name":"Camiseta Essential Negra","price":19.90,"image":"https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1200&auto=format&fit=crop"},
+  {"id":"fs-tee-white","name":"Camiseta Classic Blanca","price":19.90,"image":"https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=1200&auto=format&fit=crop"},
+  {"id":"fs-shirt-oxford","name":"Camisa Oxford Azul","price":39.90,"image":"https://images.unsplash.com/photo-1520975922203-bc4e12a3a464?q=80&w=1200&auto=format&fit=crop"},
+  {"id":"fs-hoodie","name":"Hoodie Minimal Carbón","price":49.90,"image":"https://images.unsplash.com/photo-1539533113208-f6df8cc8b543?q=80&w=1200&auto=format&fit=crop"},
+  {"id":"fs-jeans","name":"Jeans Slim Indigo","price":59.90,"image":"https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1200&auto=format&fit=crop"},
+  {"id":"fs-chino","name":"Pantalón Chino Arena","price":54.90,"image":"https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1200&auto=format&fit=crop"},
+  {"id":"fs-jacket","name":"Chaqueta Bomber Oliva","price":79.90,"image":"https://images.unsplash.com/photo-1602810318383-9a66f3dc8d0b?q=80&w=1200&auto=format&fit=crop"},
+  {"id":"fs-sneaker","name":"Zapatillas Urban Blancas","price":69.90,"image":"https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop"}
+]

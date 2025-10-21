@@ -1,0 +1,54 @@
+:root{--bg:#0f1115;--surface:#151922;--muted:#8a8f98;--text:#eaeef3;--accent:#c7a15a;--accent-2:#8f6b2f;--ok:#3fbf7f;--danger:#e74c3c;--radius:14px}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:linear-gradient(180deg,#0f1115,#111622);color:var(--text);font-family:Inter,Segoe UI,Roboto,Ubuntu,system-ui,-apple-system,sans-serif;line-height:1.5}
+img{max-width:100%;display:block}
+.container{width:min(1200px,92%);margin:0 auto}
+
+.site-header{position:sticky;top:0;z-index:50;background:rgba(15,17,21,.7);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.06)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 0}
+.brand{font-weight:800;letter-spacing:.5px;text-decoration:none;color:var(--text);font-size:1.25rem}
+.brand span{color:var(--accent)}
+.nav{display:flex;align-items:center;gap:1rem}
+.nav a{color:var(--muted);text-decoration:none;padding:.5rem .75rem;border-radius:10px;transition:.2s}
+.nav a:hover,.nav a[aria-current="page"]{color:var(--text);background:rgba(255,255,255,.05)}
+.cart-link{display:inline-flex;align-items:center;gap:.5rem}
+.badge{background:var(--accent);color:#111;padding:.15rem .45rem;border-radius:999px;font-size:.75rem;font-weight:700}
+.nav-toggle{display:none;flex-direction:column;gap:4px;background:transparent;border:0;cursor:pointer}
+.nav-toggle span{width:24px;height:2px;background:var(--text);display:block}
+
+.site-main{padding:2rem 0}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:2rem;align-items:center;padding:2rem;background:radial-gradient(1300px 500px at -10% -20%,rgba(199,161,90,.18),transparent),linear-gradient(180deg,rgba(255,255,255,.04),transparent);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius)}
+.hero h1{font-size:clamp(2rem,3.2vw,3rem);line-height:1.15;margin:0 0 .75rem}
+.hero p{color:var(--muted);margin:0 0 1.25rem}
+.btn{display:inline-flex;align-items:center;gap:.6rem;background:var(--accent);color:#111;border:0;border-radius:12px;padding:.7rem 1rem;font-weight:700;text-decoration:none}
+.btn.secondary{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.16)}
+.card-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.04),transparent);border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column}
+.card-body{padding:1rem;display:grid;gap:.5rem}
+.price{color:var(--accent);font-weight:800}
+.controls{display:flex;gap:.5rem;align-items:center}
+.input{background:#0e121a;color:var(--text);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:.55rem .7rem}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{padding:.75rem;border-bottom:1px solid rgba(255,255,255,.06);text-align:left}
+.summary{margin-top:1rem;display:flex;justify-content:space-between;align-items:center}
+.alert{padding:.6rem .8rem;border-radius:10px}
+.alert.ok{background:rgba(63,191,127,.15);border:1px solid rgba(63,191,127,.35)}
+.alert.danger{background:rgba(231,76,60,.12);border:1px solid rgba(231,76,60,.34)}
+.form{display:grid;gap:.8rem;max-width:520px}
+.form input,.form textarea{background:#0e121a;color:var(--text);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:.7rem}
+.form button{justify-self:start}
+.site-footer{border-top:1px solid rgba(255,255,255,.06);padding:1.25rem 0;color:var(--muted)}
+.footer-inner{display:flex;justify-content:space-between;align-items:center}
+
+@media (max-width: 900px){
+  .hero{grid-template-columns:1fr}
+  .card-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width: 640px){
+  .nav{position:fixed;inset:64px 0 auto 0;background:rgba(15,17,21,.96);backdrop-filter:blur(10px);padding:1rem;border-bottom:1px solid rgba(255,255,255,.06);transform:translateY(-120%);transition:.2s;flex-direction:column;align-items:flex-start}
+  .nav.open{transform:translateY(0)}
+  .nav-toggle{display:flex}
+  .footer-inner{flex-direction:column;gap:.5rem}
+  .card-grid{grid-template-columns:1fr}
+}

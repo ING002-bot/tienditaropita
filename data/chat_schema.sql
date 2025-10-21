@@ -1,0 +1,41 @@
+USE `ferre_style`;
+
+-- Chatbot público (FAQ) sesiones y mensajes
+CREATE TABLE IF NOT EXISTS chatbot_sessions (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  session_key VARCHAR(64) NOT NULL UNIQUE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  last_activity TIMESTAMP NULL
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS chatbot_messages (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  session_id BIGINT UNSIGNED NOT NULL,
+  sender ENUM('user','bot') NOT NULL,
+  message TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (session_id) REFERENCES chatbot_sessions(id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- Chat interno entre staff (admins/empleados)
+CREATE TABLE IF NOT EXISTS staff_rooms (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL UNIQUE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS staff_messages (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  room_id INT UNSIGNED NOT NULL,
+  user_id INT UNSIGNED NOT NULL,
+  message TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (room_id) REFERENCES staff_rooms(id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  INDEX idx_room_time (room_id, created_at)
+) ENGINE=InnoDB;
+
+INSERT IGNORE INTO staff_rooms (id, name) VALUES (1,'General');
