@@ -16,6 +16,10 @@ $csrf = fs_csrf_token();
       <input class="input" id="p-price" placeholder="Precio" type="number" step="0.01">
       <input class="input" id="p-stock" placeholder="Stock" type="number">
       <input class="input" id="p-image" placeholder="URL de imagen">
+      <div class="controls">
+        <input type="file" id="p-file" accept="image/*">
+        <button class="btn secondary" type="button" id="btn-upload">Subir archivo</button>
+      </div>
       <label><input type="checkbox" id="p-active" checked> Activo</label>
       <div class="controls"><button class="btn" id="save-prod">Guardar</button></div>
     </div>
@@ -35,6 +39,8 @@ $csrf = fs_csrf_token();
   const search = document.getElementById('search');
   const btnSearch = document.getElementById('btn-search');
   const saveBtn = document.getElementById('save-prod');
+  const fileInput = document.getElementById('p-file');
+  const btnUpload = document.getElementById('btn-upload');
   const form = {
     id: document.getElementById('p-id'), sku: document.getElementById('p-sku'),
     name: document.getElementById('p-name'), price: document.getElementById('p-price'),
@@ -119,6 +125,15 @@ $csrf = fs_csrf_token();
   btnSearch.addEventListener('click', searchProducts);
   saveBtn.addEventListener('click', save);
   document.getElementById('import-json').addEventListener('click', importJson);
+  btnUpload.addEventListener('click', async ()=>{
+    const f = fileInput.files?.[0]; if(!f){ alert('Selecciona un archivo'); return; }
+    const fd = new FormData();
+    fd.append('csrf', <?php echo json_encode($csrf); ?>);
+    fd.append('file', f);
+    const res = await fetch('<?php echo FS_BASE_URL; ?>/api/upload_image.php',{ method:'POST', body: fd });
+    const data = await res.json();
+    if(data.ok && data.path){ form.image.value = '<?php echo FS_BASE_URL; ?>/' + data.path; }
+  });
   searchProducts();
 })();
 </script>

@@ -2,7 +2,7 @@
 require_once __DIR__ . '/includes/config.php';
 
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
-$allowed = ['home','catalog','cart','profile','contact','login','register','staff_chat','checkout','order_success','orders_history','admin_dashboard','admin_products','admin_orders'];
+$allowed = ['home','catalog','cart','profile','contact','login','register','staff_chat','checkout','order_success','orders_history','admin_dashboard','admin_products','admin_orders','confirm_delivery'];
 if (!in_array($page, $allowed)) { $page = 'home'; }
 
 $titleMap = [
@@ -20,6 +20,7 @@ $titleMap = [
   ,'admin_dashboard' => 'Administración'
   ,'admin_products' => 'Productos (Admin)'
   ,'admin_orders' => 'Pedidos (Admin)'
+  ,'confirm_delivery' => 'Confirmar entrega'
 ];
 $title = 'Ferre Style · ' . $titleMap[$page];
 

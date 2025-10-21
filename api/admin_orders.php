@@ -17,12 +17,32 @@ $action = $_GET['action'] ?? $input['action'] ?? 'list';
 try{
   if ($action === 'list'){
     $status = $_GET['status'] ?? '';
-    $pay = $_GET['payment'] ?? '';
     $where = [];$params=[];
     if($status!==''){ $where[]='o.status=?'; $params[]=$status; }
-    if($pay!==''){ $where[]='o.payment_status=?'; $params[]=$pay; }
     $sqlWhere = $where?('WHERE '.implode(' AND ',$where)) : '';
-    $st = $pdo->prepare("SELECT o.id,o.user_id,u.name AS user_name,u.email AS user_email,o.status,o.payment_status,o.total,o.created_at,o.payment_ref,o.voucher_path FROM orders o JOIN users u ON u.id=o.user_id $sqlWhere ORDER BY o.id DESC LIMIT 200");
+    $st = $pdo->prepare(
+      "SELECT 
+         o.id,
+         o.user_id,
+         u.name AS user_name,
+         u.email AS user_email,
+         o.status,
+         o.total,
+         o.created_at,
+         o.payment_ref,
+         o.voucher_path,
+         ed.receiver_name AS delivery_receiver_name,
+         ed.delivered_at AS delivery_time,
+         ed.photo_path   AS delivery_photo,
+         ed.comment      AS delivery_comment,
+         su.name         AS delivery_by
+       FROM orders o 
+       JOIN users u ON u.id=o.user_id
+       LEFT JOIN entregas ed ON ed.id = (SELECT MAX(e2.id) FROM entregas e2 WHERE e2.order_id = o.id)
+       LEFT JOIN users su ON su.id = ed.user_id
+       $sqlWhere
+       ORDER BY o.id DESC LIMIT 200"
+    );
     $st->execute($params);
     echo json_encode(['orders'=>$st->fetchAll()]);
     exit;
@@ -32,20 +52,19 @@ try{
     if(!fs_csrf_check($input['csrf'] ?? '')){ http_response_code(400); echo json_encode(['error'=>'CSRF inválido']); exit; }
     $id = (int)($input['id'] ?? 0);
     $status = (string)($input['status'] ?? 'pending');
-    $pay = (string)($input['payment_status'] ?? 'pending');
     if($id<=0){ http_response_code(400); echo json_encode(['error'=>'ID inválido']); exit; }
 
     $pdo->beginTransaction();
-    $cur = $pdo->prepare('SELECT payment_status FROM orders WHERE id=? FOR UPDATE');
+    $cur = $pdo->prepare('SELECT status FROM orders WHERE id=? FOR UPDATE');
     $cur->execute([$id]);
     $row = $cur->fetch();
     if(!$row){ $pdo->rollBack(); http_response_code(404); echo json_encode(['error'=>'Pedido no encontrado']); exit; }
-    $wasPaid = ($row['payment_status']==='paid');
+    $wasPaid = ($row['status']==='paid');
 
-    $up = $pdo->prepare('UPDATE orders SET status=?, payment_status=? WHERE id=?');
-    $up->execute([$status,$pay,$id]);
+    $up = $pdo->prepare('UPDATE orders SET status=? WHERE id=?');
+    $up->execute([$status,$id]);
 
-    if(!$wasPaid && $pay==='paid'){
+    if(!$wasPaid && $status==='paid'){
       // descontar stock una sola vez cuando pasa a "paid"
       $sti = $pdo->prepare('SELECT product_id, quantity FROM order_items WHERE order_id=?');
       $sti->execute([$id]);

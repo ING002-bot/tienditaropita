@@ -29,6 +29,7 @@
           <span style="color:var(--muted)">Hola, <strong><?php echo htmlspecialchars($__fs_u['name']); ?></strong> (<?php echo htmlspecialchars($__fs_u['role_name']); ?>)</span>
           <?php if($__fs_u['role_name']==='admin' || $__fs_u['role_name']==='empleado'): ?>
             <a href="<?php echo FS_BASE_URL; ?>/index.php?page=staff_chat">Chat interno</a>
+            <a href="<?php echo FS_BASE_URL; ?>/index.php?page=confirm_delivery">Envíos</a>
             <?php if($__fs_u['role_name']==='admin'): ?>
               <a href="<?php echo FS_BASE_URL; ?>/index.php?page=admin_dashboard">Admin</a>
             <?php endif; ?>

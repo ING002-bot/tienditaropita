@@ -33,8 +33,8 @@ define('FS_GOOGLE_CLIENT_SECRET', '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');
 define('FS_GOOGLE_REDIRECT_URI', 'http://localhost/tiendaropa/api/google_callback.php');
 
 // Yape config (número o QR). Ajusta estos valores.
-define('FS_YAPE_NUMBER', getenv('FS_YAPE_NUMBER') ?: '');
-define('FS_YAPE_QR_URL', getenv('FS_YAPE_QR_URL') ?: '');
+define('FS_YAPE_NUMBER',('912112380'));
+define('FS_YAPE_QR_URL', FS_BASE_URL . '/uploads/qr/yape.png');
 
 function fs_load_products() {
   $file = FS_PRODUCTS_FILE;
