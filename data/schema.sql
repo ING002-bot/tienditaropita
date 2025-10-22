@@ -1,7 +1,7 @@
--- Base de datos: ferre_style
+-- Base de datos: if0_40225463_tienda
 
-CREATE DATABASE IF NOT EXISTS `ferre_style` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `ferre_style`;
+CREATE DATABASE IF NOT EXISTS `if0_40225463_tienda` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `if0_40225463_tienda`;
 
 -- Roles
 CREATE TABLE IF NOT EXISTS roles (

@@ -5,17 +5,23 @@ if (session_status() === PHP_SESSION_NONE) {
 
 define('FS_NAME', 'Ferre Style');
 
-// Detectar base URL automáticamente según el path del script
-$__fs_script_dir = rtrim(str_replace('\\','/', dirname($_SERVER['SCRIPT_NAME'] ?? '/')), '/');
-define('FS_BASE_URL', ($__fs_script_dir === '' || $__fs_script_dir === '/') ? '' : $__fs_script_dir);
+// Detectar base URL automáticamente mapeando ruta física del proyecto contra DOCUMENT_ROOT
+$__fs_docroot = isset($_SERVER['DOCUMENT_ROOT']) ? rtrim(str_replace('\\','/', $_SERVER['DOCUMENT_ROOT']), '/') : '';
+$__fs_appdir = rtrim(str_replace('\\','/', realpath(__DIR__ . '/..')), '/');
+$__fs_base = '';
+if ($__fs_docroot && str_starts_with($__fs_appdir, $__fs_docroot)) {
+  $__fs_base = substr($__fs_appdir, strlen($__fs_docroot));
+}
+define('FS_BASE_URL', $__fs_base ?: '');
+define('FS_CONFIG_PATH', __FILE__);
 
 define('FS_PRODUCTS_FILE', __DIR__ . '/../data/products.json');
 
 // DB config (ajusta según tu XAMPP)
-define('FS_DB_HOST', '127.0.0.1');
-define('FS_DB_NAME', 'ferre_style');
-define('FS_DB_USER', 'root');
-define('FS_DB_PASS', '');
+define('FS_DB_HOST', 'sql210.infinityfree.com');
+define('FS_DB_NAME', 'if0_40225463_tienda');
+define('FS_DB_USER', 'if0_40225463');
+define('FS_DB_PASS', 'B8WpKw4zm14N3');
 define('FS_DB_CHARSET', 'utf8mb4');
 
 // CSRF utils
@@ -32,11 +38,13 @@ function fs_csrf_check($token) {
 // Google OAuth: usa valores LITERALES aquí, o define variables de entorno con nombres FS_GOOGLE_*
 define('FS_GOOGLE_CLIENT_ID', '444293560484-ktfob812fvu6e02uut9j9euprpls7h1r.apps.googleusercontent.com');
 define('FS_GOOGLE_CLIENT_SECRET', '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');
-define('FS_GOOGLE_REDIRECT_URI', 'http://localhost/tiendaropa/api/google_callback.php');
-
+// Redirección OAuth dinámica según el host actual
+$__fs_scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+$__fs_host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+define('FS_GOOGLE_REDIRECT_URI', $__fs_scheme . '://' . $__fs_host . FS_BASE_URL . '/api/google_callback.php');
 // Yape config (número o QR). Ajusta estos valores.
-define('FS_YAPE_NUMBER',('912112380'));
-define('FS_YAPE_QR_URL', FS_BASE_URL . '/uploads/qr/yape.png');
+define('FS_YAPE_NUMBER',('938380750'));
+define('FS_YAPE_QR_URL', FS_BASE_URL . '/uploads/qr/yape1.jpg');
 
 function fs_load_products() {
   $file = FS_PRODUCTS_FILE;

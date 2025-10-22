@@ -1,4 +1,4 @@
-USE `ferre_style`;
+USE `if0_40225463_tienda`;
 
 -- Chatbot público (FAQ) sesiones y mensajes
 CREATE TABLE IF NOT EXISTS chatbot_sessions (

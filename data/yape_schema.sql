@@ -1,4 +1,4 @@
-USE `ferre_style`;
+USE `if0_40225463_tienda`;
 
 ALTER TABLE orders
   ADD COLUMN payment_method ENUM('yape') NOT NULL DEFAULT 'yape' AFTER total,
