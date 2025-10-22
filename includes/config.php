@@ -5,7 +5,9 @@ if (session_status() === PHP_SESSION_NONE) {
 
 define('FS_NAME', 'Ferre Style');
 
-define('FS_BASE_URL', '/tiendaropa');
+// Detectar base URL automáticamente según el path del script
+$__fs_script_dir = rtrim(str_replace('\\','/', dirname($_SERVER['SCRIPT_NAME'] ?? '/')), '/');
+define('FS_BASE_URL', ($__fs_script_dir === '' || $__fs_script_dir === '/') ? '' : $__fs_script_dir);
 
 define('FS_PRODUCTS_FILE', __DIR__ . '/../data/products.json');
 

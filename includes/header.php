@@ -7,7 +7,7 @@
   <title><?php echo htmlspecialchars($title ?? FS_NAME); ?></title>
   <meta name="description" content="Moda masculina con estilo: Ferre Style. Ropa para hombres moderna y elegante.">
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="<?php echo FS_BASE_URL; ?>/assets/css/style.css">
+  <link rel="stylesheet" href="<?php echo (FS_BASE_URL !== '') ? (FS_BASE_URL . '/assets/css/style.css') : 'assets/css/style.css'; ?>">
 </head>
 <body>
   <header class="site-header">
